@@ -3,6 +3,7 @@
 #' @param file a character string. path/to/html.file
 #' @param password a character string. Password that unlocks file contents
 #' @param out_file optional. file path and name for new file.
+#' @param encoding encoding to be assumed for input strings. It is used to mark character strings as known to be in Latin-1 or UTF-8: it is not used to re-encode the input.
 #'
 #' @return Saves an encrypted HTML file to same path as original file input by appending "-protected.html", unless out_file is specified.
 #' @export
