@@ -36,7 +36,7 @@ pagecryptr <- function(file, password, out_file = NULL, encoding = "unknown"){
   js$assign("password", password[[1]])
 
   #read the unprotected HTML into R and assign into JS
-  contents <- paste(readLines(file, encoding = encoding), collapse = " ")
+  contents <- paste(readLines(file, encoding = encoding), collapse = "\n")
   js$assign("fileConts", contents)
 
   # JS copy/pasted from the PageCrypt HTML index.html
