@@ -4,7 +4,7 @@
 \alias{pagecryptr}
 \title{Encrypt an HTML Page}
 \usage{
-pagecryptr(file, password, out_file = NULL)
+pagecryptr(file, password, out_file = NULL, encoding = "unknown")
 }
 \arguments{
 \item{file}{a character string. path/to/html.file}
@@ -12,12 +12,14 @@ pagecryptr(file, password, out_file = NULL)
 \item{password}{a character string. Password that unlocks file contents}
 
 \item{out_file}{optional. file path and name for new file.}
+
+\item{encoding}{encoding to be assumed for input strings (passed to readLines()). It is used to mark character strings as known to be in Latin-1 or UTF-8: it is not used to re-encode the input.}
 }
 \value{
 Saves an encrypted HTML file to same path as original file input by appending "-protected.html", unless out_file is specified.
 }
 \description{
-This is copy/pasta from the PageCrypt project by Max Laumeister translated for use as an R function. Makes use of the V8 package to create a javascript environment in R.
+This is copy/pasta from the PageCrypt project by Max Laumeister translated for use as an R function. Makes use of the V8 package to create a javascript environment in R. \href{https://www.maxlaumeister.com/pagecrypt/}{You can use the original PageCrypt here}
 }
 \examples{
 if(interactive()){
