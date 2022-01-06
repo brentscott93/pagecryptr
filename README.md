@@ -22,7 +22,7 @@ You can install the development version of pagecryptr from
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("brentscott93/PageCrypt/pagecryptr")
+devtools::install_github("brentscott93/pagecryptr")
 ```
 
 ## Example
