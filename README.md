@@ -17,6 +17,14 @@ R package now currently runs the legacy version of PageCrypt.
 
 ## Installation
 
+Current stable version will be hosted on my `drat` repository. 
+
+``` r
+# install.packages("drat")
+drat::addRepo("brentscott93")
+install.packages("pagecryptr")
+```
+
 You can install the development version of pagecryptr from
 [GitHub](https://github.com/) with:
 
