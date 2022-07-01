@@ -76,3 +76,34 @@ pagecryptr <- function(file, password, out_file = NULL, encoding = "unknown"){
   writeLines(encrypted_doc, new_file)
 
 }
+
+
+
+
+
+#' Knit Rmd to an encrypted HTML
+#'
+#' @param input a .Rmd to input to knit to html
+#' @param password
+#' @param ... 
+#'
+#' @return an encrypted html file
+#' @export
+pagecryptr_knit <- function(input, password) {
+  # check if file is an .Rmd
+  if(substr(input, nchar(input)-3, nchar(input)) != ".Rmd"){
+    stop("File is not a .Rmd file")
+  }
+  
+  #check if password is a character
+  if(!is.character(password)){
+    stop("Password must be a character string")
+  }
+  #render with markdown
+  rmarkdown::render(input, output_format = html_document())
+  
+  #get file name and pagecrpyt
+  file_name <- strsplit(input, ".", fixed = TRUE)[[1]][1]
+  html_file <- paste0(file_name,".html")
+  pagecryptr(html_file, password = password, out_file = html_file)
+}
