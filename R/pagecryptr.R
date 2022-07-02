@@ -83,6 +83,7 @@ pagecryptr <- function(file, password, out_file = NULL, encoding = "unknown"){
 
 #' Knit Rmd to an encrypted HTML
 #'
+#' @description 
 #' @param input a .Rmd to input to knit to html
 #' @param password
 #' @param ... 
@@ -90,6 +91,7 @@ pagecryptr <- function(file, password, out_file = NULL, encoding = "unknown"){
 #' @return an encrypted html file
 #' @export
 pagecryptr_knit <- function(input, password) {
+  
   # check if file is an .Rmd
   if(substr(input, nchar(input)-3, nchar(input)) != ".Rmd"){
     stop("File is not a .Rmd file")
@@ -100,10 +102,62 @@ pagecryptr_knit <- function(input, password) {
     stop("Password must be a character string")
   }
   #render with markdown
-  rmarkdown::render(input, output_format = html_document())
+  rmarkdown::render(input, output_format =  "html_document")
   
   #get file name and pagecrpyt
   file_name <- strsplit(input, ".", fixed = TRUE)[[1]][1]
   html_file <- paste0(file_name,".html")
   pagecryptr(html_file, password = password, out_file = html_file)
+  
 }
+
+
+#' For use in the YAML header
+#'
+#' @param input a .Rmd to input to knit to html
+#' @param ... 
+#'
+#' @return an encrypted html file
+#' @export
+pagecryptr_yaml_knit <- function(input, ...) {
+  
+  if(!file.exists(".secrets/pagecryptr-password.rds")){
+    stop("You need to create a password with pagecryptr_set_password() before using the YAML knit helper.")
+  }
+  password <- readRDS(".secrets/pagecryptr-password.rds")
+  #render with markdown
+  rmarkdown::render(input, output_format = "html_document")
+  
+  #get file name and pagecrpyt
+  file_name <- strsplit(input, ".", fixed = TRUE)[[1]][1]
+  html_file <- paste0(file_name,".html")
+  pagecryptr(html_file, password = password, out_file = html_file)
+  
+}
+
+#' YAML Header Helper
+#' @description Save a password in a .rds object in a ".secrets" directory. This is a helper for the YAML knit header option. 
+#' Allows user to not store password in the document. Will add ".secrets" to .gitignore if file exists.
+#'
+#' @param password 
+#'
+#' @return
+#' @export
+#'
+#' @examples
+pagecryptr_set_password <- function(password){
+  
+  #check if password is a character
+  if(!is.character(password)){
+    stop("Password must be a character string")
+  }
+  
+  dir.create(".secrets", showWarnings = FALSE)
+  saveRDS(password, file = ".secrets/pagecryptr-password.rds")
+  
+  if(file.exists(".gitignore")){
+    cat(".secrets \n", file = ".gitignore", append = TRUE)
+  }
+  
+}
+

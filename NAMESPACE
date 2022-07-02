@@ -2,4 +2,6 @@
 
 export(pagecryptr)
 export(pagecryptr_knit)
+export(pagecryptr_set_password)
+export(pagecryptr_yaml_knit)
 import(V8)
